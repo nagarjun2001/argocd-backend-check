@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liveaaz-backend
+  namespace: liveaaz-backend
+  labels:
+    name: liveaaz-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: liveaaz-backend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: liveaaz-backend
+    spec:
+      containers:
+      - image: nagarjunns/liveaaz-backend-k8s:1.1
+        name: liveaaz-backend
+        ports:
+          - containerPort: 5005
+        envFrom:
+          - configMapRef:
+              name: backend-configmap
+          - secretRef:
+              name: backend-secrets
+        

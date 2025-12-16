@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: backend-service
+  namespace: liveaaz-backend
+spec:
+  selector:
+    app: liveaaz-backend
+  type: LoadBalancer
+  ports:
+  - port:  5005
+    targetPort:  5005
